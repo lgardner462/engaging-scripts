@@ -1,0 +1,20 @@
+#/bin/bash
+
+#check if FSs exists/can be reached from where script is being run
+	# if yes proceed
+	# if no exit/get to where you can proceed
+	 if [ ! -d /nobackup1 ];
+		then echo "Cannot find /nobackup1"; 
+		else echo "yup";
+	 fi
+
+
+#get list of users from sacctmgr
+	#check if usr dir exists on lustre FS
+		#if yes, all is good
+		#if no, make it so
+	#check if usr dir exists on nfs
+                #if yes, all is good
+                #if no, make it so
+#exit status
+	
