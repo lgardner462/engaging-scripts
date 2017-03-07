@@ -3,18 +3,74 @@
 #check if FSs exists/can be reached from where script is being run
 	# if yes proceed
 	# if no exit/get to where you can proceed
-	 if [ ! -d /nobackup1 ];
-		then echo "Cannot find /nobackup1"; 
-		else echo "yup";
-	 fi
+show_help () {
+    echo add -t for no email
+    exit
+}
 
+text=0
+
+while getopts "h?t" opt; do
+
+	case "$opt" in
+	
+	h|\?)
+		show_help
+		exit 0
+	;;
+	
+	t)
+		  text=1
+	;;
+	esac
+done
+
+
+if [ ! -d /nobackup1b ];
+then
+	
+	echo "Cannot find /nobackup1"; 
+	exit 1;
+else 
+	echo "/nobackup1b Found, checking for /pool001";
+	
+	if [ ! -d /pool001 ];
+	then
+		echo "Cannot find /pool001";
+		exit 1
+	else
+		echo "Found /pool001, proceed to usr checks"
+	fi
+ fi
 
 #get list of users from sacctmgr
+USERS=$( getent passwd | awk -F : '{print $1}'| sort)
 	#check if usr dir exists on lustre FS
 		#if yes, all is good
 		#if no, make it so
 	#check if usr dir exists on nfs
-                #if yes, all is good
-                #if no, make it so
+		#if yes, all is good
+		#if no, make it so
+for i in $USERS;do
+	if [ ! -d /nobackup1b/users/$i ];
+		then
+			echo "/nobackup1b/users/"$i" does not exist" > /dev/stderr;
+			#mkdir /nobackup1b/users/$USER
+			#chown $USER.$USER /noboackup1b/users/$USER        
+		else 
+		echo "/nobackup1b exists, checking for /pool001" > /dev/stderr;
+		if [ ! -d /pool001/$i ];
+			then
+			echo "/pool001/"$i" does not exist" > /dev/stderr;
+			#mkdir /pool001/$USER
+			#chown $USER.$USER /pool001/$USER
+		else
+			echo "Found /pool001/"$i" and /nobackup1b/users/"$i
+		fi
+	fi
+done;
+
+
+#check text flag/do email
 #exit status
 	
