@@ -77,7 +77,6 @@ for i in $USERS;do
             echo "checking for /pool001" > /dev/stderr;
             if [ ! -d /pool001/$i ];then
                 echo "/pool001/"$i" does not exist" > /dev/stderr;
-                if [ $createDirs ];then
                   read -r -p "make /pool001/"$i"? [y/N]" makeDir
                   makeDir=${makeDir,,}
                   if [[ "$makeDir" =~ (yes|y) ]];then
@@ -85,7 +84,6 @@ for i in $USERS;do
                      #mkdir /pool001/$USER
                      #chown $USER.$USER /pool001/$USER
                   fi
-              fi
             else
                 echo "Found /pool001/"$i" and /nobackup1b/users/"$i > /dev/null 2>&1
             fi
