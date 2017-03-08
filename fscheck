@@ -50,7 +50,7 @@ else
     fi
 fi
 
-#get list of users from sacctmgr
+#get list of users from getent, grepped home to find people accounts, should i do that?
 USERS=$( getent passwd | grep "/home" | awk -F: '{print $1}'| sort)
     #check if usr dir exists on lustre FS
         #if yes, all is good
@@ -67,8 +67,8 @@ for i in $USERS;do
             makeDir=${makeDir,,}
             if [[ "$makeDir" =~ (yes|y) ]];then
                 echo "Directory creation magic goes here"
-                #mkdir /nobackup1b/users/$USER
-                #chown $USER.$USER /noboackup1b/users/$USER
+                #mkdir /nobackup1b/users/$i
+                #chown $USER.$USER /noboackup1b/users/$i
             fi
         fi
     fi
@@ -80,8 +80,8 @@ for i in $USERS;do
             makeDir=${makeDir,,}
             if [[ "$makeDir" =~ (yes|y) ]];then
                 echo "Directory creation magic goes here"
-                #mkdir /pool001/$USER
-                #chown $USER.$USER /pool001/$USER
+                #mkdir /pool001/$i
+                #chown $USER.$USER /pool001/$i
             fi
         fi
     fi
