@@ -91,12 +91,7 @@ for i in $USERS;do
 	fi
 done;
 
-if [ ! $text ];then
-    echo "email magic"
-fi
 #check text flag/do email
-#exit status
-
 #if [ $text -eq 0 ]; then
 #    $(which mail) -s "`basename $0` STATUS `hostname` `date '+%Y-%m-%d'`" logs < ${TEMPFILE}
 #    rm -f ${TEMPFILE}
