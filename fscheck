@@ -77,7 +77,7 @@ for i in $USERS;do
             echo "checking for /pool001" > /dev/stderr;
             if [ ! -d /pool001/$i ];then
                 echo "/pool001/"$i" does not exist" > /dev/stderr;
-                if [ $createDirs];then
+                if [ $createDirs ];then
                   read -r -p "make /pool001/"$i"? [y/N]" makeDir
                   makeDir=${makeDir,,}
                   if [[ "$makeDir" =~ (yes|y) ]];then
@@ -95,7 +95,7 @@ for i in $USERS;do
 		echo "/nobackup1b exists, checking for /pool001" > /dev/stderr;
 		if [ ! -d /pool001/$i ];then
 			echo "/pool001/"$i" does not exist" > /dev/stderr;
-            if [ $createDirs];then
+            if [ $createDirs ];then
                 read -r -p "make /pool001/"$i"? [y/N]" makeDir
                 makeDir=${makeDir,,}
                 if [[ "$makeDir" =~ (yes|y) ]];then
