@@ -1,10 +1,10 @@
 #/bin/bash
 
 #check if FSs exists/can be reached from where script is being run
-	# if yes proceed
-	# if no exit/get to where you can proceed
+# if yes proceed
+# if no exit/get to where you can proceed
 show_help () {
-#    echo "add -t for no email"
+#   echo "add -t for no email"
     echo "add -c to create directories if they don't exist"
     exit
 }
@@ -13,19 +13,19 @@ text=0
 
 while getopts "h?tc" opt; do
 
-	case "$opt" in
-	
-	h|\?)
-		show_help
-		exit 0
-	;;
+    case "$opt" in
+    
+    h|\?)
+        show_help
+        exit 0
+    ;;
     c)
         createDirs=1
-	;;
-	t)
-		  text=1
-	;;
-	esac
+    ;;
+    t)
+          text=1
+    ;;
+    esac
 done
 
 #if [ $text -eq 0 ]; then
@@ -37,34 +37,30 @@ done
 
 
 
-if [ ! -d /nobackup1b ];
-then
-	
-	echo "Cannot find /nobackup1b from here"; 
-	exit 1;
+if [ ! -d /nobackup1b ];then    
+    echo "Cannot find /nobackup1b from here"; 
+    exit 1;
 else 
-	echo "/nobackup1b Found, checking for /pool001" > /dev/null 2>&1;
-	
-	if [ ! -d /pool001 ];
-	then
-		echo "Cannot find /pool001 from here";
-		exit 1
-	else
-		echo "Found /pool001, proceed to usr checks" > /dev/null  2>&1;
-	fi
- fi
+    echo "/nobackup1b Found, checking for /pool001" > /dev/null 2>&1;    
+    if [ ! -d /pool001 ];then
+        echo "Cannot find /pool001 from here";
+        exit 1
+    else
+        echo "Found /pool001, proceed to usr checks" > /dev/null  2>&1;
+    fi
+fi
 
 #get list of users from sacctmgr
 USERS=$( getent passwd | grep "/home" | awk -F: '{print $1}'| sort)
-	#check if usr dir exists on lustre FS
-		#if yes, all is good
-		#if no, make it so
-	#check if usr dir exists on nfs
-		#if yes, all is good
-		#if no, make it so
+    #check if usr dir exists on lustre FS
+        #if yes, all is good
+        #if no, make it so
+    #check if usr dir exists on nfs
+        #if yes, all is good
+        #if no, make it so
 for i in $USERS;do
-	if [ ! -d /nobackup1b/users/$i ];then
-		echo "/nobackup1b/users/"$i" does not exist" > /dev/stderr;
+    if [ ! -d /nobackup1b/users/$i ];then
+        echo "/nobackup1b/users/"$i" does not exist" > /dev/stderr;
         if [ $createDirs ];then
             read -r -p "make /nobackup1b/users/"$i"? [y/N]" makeDir
             #,, == .toLowerCase()
@@ -78,7 +74,7 @@ for i in $USERS;do
     fi
     echo "checking for /pool001" > /dev/stderr;
     if [ ! -d /pool001/$i ];then
-    echo "/pool001/"$i" does not exist" > /dev/stderr;
+        echo "/pool001/"$i" does not exist" > /dev/stderr;
         if [ $createDirs ];then
             read -r -p "make /pool001/"$i"? [y/N]" makeDir
             makeDir=${makeDir,,}
@@ -88,7 +84,7 @@ for i in $USERS;do
                 #chown $USER.$USER /pool001/$USER
             fi
         fi
-	fi
+    fi
 done;
 
 #check text flag/do email
