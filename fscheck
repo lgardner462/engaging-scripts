@@ -68,7 +68,7 @@ for i in $USERS;do
             if [[ "$makeDir" =~ (yes|y) ]];then
                 echo "Directory creation magic goes here"
                 #mkdir /nobackup1b/users/$i
-                #chown $USER.$USER /noboackup1b/users/$i
+                #chown $i.$i /noboackup1b/users/$i
             fi
         fi
     fi
@@ -81,7 +81,7 @@ for i in $USERS;do
             if [[ "$makeDir" =~ (yes|y) ]];then
                 echo "Directory creation magic goes here"
                 #mkdir /pool001/$i
-                #chown $USER.$USER /pool001/$i
+                #chown $i.$i /pool001/$i
             fi
         fi
     fi
