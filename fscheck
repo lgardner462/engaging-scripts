@@ -50,7 +50,7 @@ else
     fi
 fi
 
-#get list of users from sacctmgr
+#get list of users from getent, grepped home to find people accounts, should i do that?
 USERS=$( getent passwd | grep "/home" | awk -F: '{print $1}'| sort)
     #check if usr dir exists on lustre FS
         #if yes, all is good
@@ -67,12 +67,12 @@ for i in $USERS;do
             makeDir=${makeDir,,}
             if [[ "$makeDir" =~ (yes|y) ]];then
                 echo "Directory creation magic goes here"
-                #mkdir /nobackup1b/users/$USER
-                #chown $USER.$USER /noboackup1b/users/$USER
+                #mkdir /nobackup1b/users/$i
+                #chown $i.$i /noboackup1b/users/$i
             fi
         fi
     fi
-    echo "checking for /pool001" > /dev/stderr;
+    echo "checking for /pool001" > /dev/null 2>&1;
     if [ ! -d /pool001/$i ];then
         echo "/pool001/"$i" does not exist" > /dev/stderr;
         if [ $createDirs ];then
@@ -80,8 +80,8 @@ for i in $USERS;do
             makeDir=${makeDir,,}
             if [[ "$makeDir" =~ (yes|y) ]];then
                 echo "Directory creation magic goes here"
-                #mkdir /pool001/$USER
-                #chown $USER.$USER /pool001/$USER
+                #mkdir /pool001/$i
+                #chown $i.$i /pool001/$i
             fi
         fi
     fi
@@ -92,4 +92,5 @@ done;
 #    $(which mail) -s "`basename $0` STATUS `hostname` `date '+%Y-%m-%d'`" logs < ${TEMPFILE}
 #    rm -f ${TEMPFILE}
 #fi
+
 
